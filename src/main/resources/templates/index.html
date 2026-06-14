@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todo App</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+            display:flex;
+            justify-content:center;
+            padding-top:50px;
+        }
+
+        .container{
+            width:700px;
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        form{
+            display:flex;
+            gap:10px;
+            margin-bottom:20px;
+        }
+
+        input[type=text]{
+            flex:1;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:8px;
+        }
+
+        button{
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        .add-btn{
+            background:#4CAF50;
+            color:white;
+        }
+
+        .task{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px;
+            margin-top:10px;
+            background:#f8f8f8;
+            border-radius:10px;
+        }
+
+        .completed{
+            text-decoration:line-through;
+            color:gray;
+        }
+
+        .actions{
+            display:flex;
+            gap:10px;
+        }
+
+        .toggle-btn{
+            background:#2196F3;
+            color:white;
+        }
+
+        .delete-btn{
+            background:#f44336;
+            color:white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Todo App</h1>
+
+    <form action="/add" method="post">
+        <input type="text" name="title" placeholder="Enter Task">
+        <button class="add-btn">Add</button>
+    </form>
+
+    <div th:each="task : ${tasks}" class="task">
+
+        <span
+                th:text="${task.title}"
+                th:classappend="${task.completed} ? 'completed' : ''">
+        </span>
+
+        <div class="actions">
+
+            <a th:href="@{/toggle/{id}(id=${task.id})}">
+                <button type="button" class="toggle-btn">
+                    Toggle
+                </button>
+            </a>
+
+            <a th:href="@{/delete/{id}(id=${task.id})}">
+                <button type="button" class="delete-btn">
+                    Delete
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
